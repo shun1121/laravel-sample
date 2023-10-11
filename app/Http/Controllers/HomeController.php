@@ -27,6 +27,8 @@ class HomeController extends Controller
     }
     public function create()
     {
-        return view('create');
+        // ログインしているユーザ情報をViewに渡す
+        $user = \Auth::user();
+        return view('create', compact('user'));
     }
 }
