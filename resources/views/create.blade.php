@@ -7,6 +7,7 @@
         <div class="card-header">新規メモ作成</div>
         <div class="card-body">
             <form method='POST' action="/store">
+                <!-- ↓ユーザ乗っ取り対策 -->
                 @csrf
                 <input type='hidden' name='user_id' value="{{ $user['id'] }}">
                 <div class="form-group">
