@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Memo;
+use App\Models\Tag;
 
 class HomeController extends Controller
 {
@@ -50,7 +51,8 @@ class HomeController extends Controller
         // $exist_tag = Tag::where('name', $data['tag'])->where('user_id', $data['user_id'])->first();
         // if( empty($exist_tag['id']) ){
         //     //先にタグをインサート
-        //     $tag_id = Tag::insertGetId(['name' => $data['tag'], 'user_id' => $data['user_id']]);
+            $tag_id = Tag::insertGetId(['name' => $data['tag'], 'user_id' => $data['user_id']]);
+            // dd($tag_id);
         // } else {
         //     $tag_id = $exist_tag['id'];
         // }
@@ -60,7 +62,7 @@ class HomeController extends Controller
         $memo_id = Memo::insertGetId([
             'content' => $data['content'],
             'user_id' => $data['user_id'],
-            // 'tag_id' => $tag_id,
+            'tag_id' => $tag_id,
             'status' => 1
         ]);
 
