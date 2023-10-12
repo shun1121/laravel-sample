@@ -78,4 +78,13 @@ class HomeController extends Controller
         //取得したメモをViewに渡す
         return view('edit', compact('memo', 'user', 'memos'));
     }
+
+    // $idで/edit/1の1などのパラメータを取得できる。
+    public function update(Request $request, $id)
+    {
+        $inputs = $request->all();
+        // データベースの'id'がurlの$idと同じもの
+        Memo::where('id', $id)->update(['content' => $inputs['content']]);
+        return redirect()->route('home');
+    }
 }

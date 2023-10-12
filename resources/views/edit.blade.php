@@ -5,7 +5,9 @@
     <div class="card w-100">
         <div class="card-header">メモ編集</div>
         <div class="card-body">
-            <form method='POST' action="/store">
+            <!-- route()関数 -->
+            <!-- https://camo.qiitausercontent.com/fc18787c61c484afd259e81c92d841ba5bc15871/68747470733a2f2f71696974612d696d6167652d73746f72652e73332e61702d6e6f727468656173742d312e616d617a6f6e6177732e636f6d2f302f3639383433392f35336635386662392d313836392d333034322d643133662d6532666537643333616131322e6a706567 -->
+            <form method='POST' action="{{ route('update', ['id' => $memo['id']]) }}">
                 <!-- ↓ユーザ乗っ取り対策 -->
                 @csrf
                 <input type='hidden' name='user_id' value="{{ $user['id'] }}">
