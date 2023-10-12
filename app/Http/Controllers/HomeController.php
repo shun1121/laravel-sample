@@ -76,9 +76,10 @@ class HomeController extends Controller
         // 該当するIDのメモをデータベースから取得、first()は条件に該当する行を一つだけ取得するメソッド。
         $memo = Memo::where('status', 1)->where('id', $id)->where('user_id', $user['id'])->first();
         $memos = Memo::where('user_id', $user['id'])->where('status', 1)->orderBy('updated_at', 'DESC')->get();
+        $tags = Tag::where('user_id', $user['id'])->get();
         // dd($memo);
         //取得したメモをViewに渡す
-        return view('edit', compact('memo', 'user', 'memos'));
+        return view('edit', compact('memo', 'user', 'memos', 'tags'));
     }
 
     // $idで/edit/1の1などのパラメータを取得できる。
@@ -86,7 +87,7 @@ class HomeController extends Controller
     {
         $inputs = $request->all();
         // データベースの'id'がurlの$idと同じもの
-        Memo::where('id', $id)->update(['content' => $inputs['content']]);
+        Memo::where('id', $id)->update(['content' => $inputs['content'], 'tag_id' => $inputs['tag_id']]);
         return redirect()->route('home');
     }
 }
