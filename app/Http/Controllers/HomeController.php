@@ -28,7 +28,7 @@ class HomeController extends Controller
         $user = \Auth::user();
         $memos = Memo::where('user_id', $user['id'])->where('status', 1)->orderBy('updated_at', 'DESC')->get();
         // dd($memos);
-        return view('home', compact('user', 'memos'));
+        return view('create', compact('user', 'memos'));
     }
 
     public function create()
@@ -90,5 +90,15 @@ class HomeController extends Controller
         // データベースの'id'がurlの$idと同じもの
         Memo::where('id', $id)->update(['content' => $inputs['content'], 'tag_id' => $inputs['tag_id']]);
         return redirect()->route('home');
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $inputs = $request->all();
+        // ↓論理削除
+        Memo::where('id', $id)->update(['status' => 2]);
+        // ↓物理削除
+        // Memo:where('id', $id)->delete();
+        return redirect()->route('home')->with('success', 'メモの削除が完了しました。');
     }
 }
