@@ -48,14 +48,15 @@ class HomeController extends Controller
         // MEMOモデルにDBへ保存する命令を出す
 
         // 同じタグがあるか確認
-        // $exist_tag = Tag::where('name', $data['tag'])->where('user_id', $data['user_id'])->first();
-        // if( empty($exist_tag['id']) ){
-        //     //先にタグをインサート
+        $exist_tag = Tag::where('name', $data['tag'])->where('user_id', $data['user_id'])->first();
+        // dd($exist_tag['name']);
+        if( empty($exist_tag['id']) ){
+            //先にタグをインサート
             $tag_id = Tag::insertGetId(['name' => $data['tag'], 'user_id' => $data['user_id']]);
             // dd($tag_id);
-        // } else {
-        //     $tag_id = $exist_tag['id'];
-        // }
+        } else {
+            $tag_id = $exist_tag['id'];
+        }
 
         //タグのIDが判明する
         // タグIDをmemosテーブルに入れてあげる
